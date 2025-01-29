@@ -1,11 +1,10 @@
 Package: IVDML
-Title: What the Package Does (One Line, Title Case)
+Title: Double Machine Learning with Instrumental Variables
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Cyrill", "Scheidegger", , "cyrill.scheidegger@stat.math.ethz.ch", role = c("aut", "cre"))
+Description: Implementation instrumental variable (IV) estimators for homogeneous and heterogeneous treatment effects with efficient machine learning instruments. The estimators are based on double/debiased machine learning allowing for nonlinear and potentially high-dimensional control variables. Details can be found in REFERENCE TO ARXIV PAPER
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
