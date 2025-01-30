@@ -15,4 +15,5 @@ Imports:
     mgcv,
     ranger,
     stats,
-    xgboost
+    xgboost,
+    parallel
