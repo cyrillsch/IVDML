@@ -1,6 +1,5 @@
-
-
-
+# helper function that tunes the nuisance functions with the supplied ml_par list.
+# yields the tuned_ml_par list needed by residuals_helper()
 tuning_helper <- function(Y, D, Z, X, ml_method, ml_par, iv_method){
   sublist_names <- c("ml_par_D_XZ", "ml_par_D_X", "ml_par_f_X", "ml_par_Y_X", "ml_par_Z_X")
   if(all(names(ml_par) %in% sublist_names)){
@@ -100,6 +99,9 @@ tuning_helper <- function(Y, D, Z, X, ml_method, ml_par, iv_method){
   return(tuned_ml_par)
 }
 
+
+# helper function to obtain the list of residuals of the nuisance functions.
+# uses the tuned_ml_par list supplied by tuning_helper()
 residuals_helper <- function(Y, D, Z, X, ml_method, tuned_ml_par, iv_method, K_dml){
   N <- length(Y)
   n <- ceiling(N/K_dml)

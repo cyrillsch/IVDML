@@ -1,4 +1,4 @@
-#' Fitting Double Machine Learning Models with Instrumental Variables and potentially heterogenous treatment effect
+#' Fitting Double Machine Learning Models with Instrumental Variables and Potentially Heterogenous Treatment Effect
 #'
 #' This function is used to fit a Double Machine Learning (DML) model with Instrumental Variables (IV) with the goal to perform inference on potentially heterogeneous treatment effects. The model under study is \eqn{Y = \beta(A)D + g(X) + \epsilon}, where the error \eqn{\epsilon} is potentially correlated with the treatment \eqn{D}, but there is an IV \eqn{Z} satisfying \eqn{\mathbb E[\epsilon|Z,X] = 0}. The object of interest is the treatment effect \eqn{\beta} of the treatment \eqn{D} on the response \eqn{Y}. The treatment effect \eqn{\beta} is either constant or can depend on the univariate quantity \eqn{A}, which is typically a component of the covariates \eqn{X}.
 #'
@@ -9,10 +9,10 @@
 #' @param A Numeric vector. Variable with respect to which treatment effect heterogeneity is considered. Usually equal to a column of X and in this case it can also be specified later (default: NULL).
 #' @param ml_method Character. Machine learning method to use. Options are "gam", "xgboost", and "randomForest".
 #' @param ml_par List. Parameters for the machine learning method:
-#'   - If `ml_method == "gam"`, can specify `ind_lin_Z` and `ind_lin_X` for components to be modeled linearly.
+#'   - If `ml_method == "gam"`, can specify `ind_lin_Z` and `ind_lin_X` for components of `Z` and `X` to be modeled linearly.
 #'   - If `ml_method == "xgboost"`, can specify `max_nrounds`, `k_cv`, `early_stopping_rounds`, and vectors `eta` and `max_depth`.
 #'   - If `ml_method == "randomForest"`, can specify `num.trees`, `num_mtry` (number of different mtry values to try out) or a vector `mtry`, a vector `max.depth`, `num_min.node.size` (number of different min.node.size values to try out) or a vector `min.node.size`.
-#'   - To specify different parameters for the different nuisance function regressions, `ml_par` should be a list of lists: `ml_par_D_XZ`, `ml_par_D_X`, `ml_par_f_X`, `ml_par_Y_X`, `ml_par_Z_X`.
+#'   - To specify different parameters for the different nuisance function regressions, `ml_par` should be a list of lists: `ml_par_D_XZ` (parameters for nuisance function \eqn{\mathbb E[D|Z, X]}, needed for `iv_method` "mlIV" and "mlIV_direct"), `ml_par_D_X` (parameters for nuisance function \eqn{\mathbb E[D|X]}, needed for `iv_method` "linearIV", "mlIV" and "mlIV_direct"), `ml_par_f_X` (parameters for nuisance function \eqn{\mathbb E[\widehat{\mathbb E}[D|Z, X]|X]}, needed for `iv_method` "mlIV"), `ml_par_Y_X` (parameters for nuisance function \eqn{\mathbb E[Y|X]}, needed for `iv_method` "linearIV", "mlIV" and "mlIV_direct"), `ml_par_Z_X` (parameters for nuisance function \eqn{\mathbb E[Z|X]}, needed for `iv_method` "linearIV").
 #' @param A_deterministic_X Logical. Whether `A` is a deterministic function of `X` (default: TRUE).
 #' @param K_dml Integer. Number of cross-fitting folds (default: 5).
 #' @param iv_method Character vector. Instrumental variables estimation method. Options: "linearIV", "mlIV", "mlIV_direct" (default: c("linearIV", "mlIV")).
