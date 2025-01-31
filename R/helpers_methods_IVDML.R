@@ -19,11 +19,7 @@ check_input_consistency <- function(model, iv_method, a, A, kernel_name, bandwid
       stop("Kernel name and bandwidth must be specified for the heterogeneous treatment effect.")
     }
     if(is.null(A)){
-      if(!is.null(model$A)){
-        A <- model$A
-      } else {
-        stop("A must be specified either in the model or as argument of the function.")
-      }
+      stop("A must be specified either in the model or as argument of the function.")
     }
     stopifnot(length(A) == N)
   }

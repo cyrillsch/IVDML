@@ -1,9 +1,37 @@
+#' Extract Treatment Effect Estimate from an IVDML Model
+#'
+#' This function computes the estimated (potentially heterogeneous) treatment effect from a fitted `IVDML` model (output of [fit_IVDML()]).
+#'
+#' @param model An object of class `IVDML`, produced by the [fit_IVDML()] function.
+#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.
+#' @param a Numeric (optional). A specific value of `A` at which to evaluate the heterogeneous treatment effect. If `NULL`, the function returns the homogeneous treatment effect.
+#' @param A Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If `NULL`, the function assumes the `A` used in model fitting.
+#' @param kernel_name Character (optional). The name of the kernel function to use for smoothing (if a heterogeneous treatment effect is estimated). Needs to be one of "boxcar", "gaussian", "epanechnikov" or "tricube".
+#' @param bandwidth Numeric (optional). The bandwidth for the kernel smoothing (if a heterogeneous treatment effect is estimated).
+#' @param ... Further arguments passed to or from other methods.
+#'
+#' @return If `a` is not specified, the estimated homogeneous treatment effect is returned. If `a` is specified, the heterogeneous treatment effect \eqn{\beta(a)} at \eqn{A = a} is returned.
+#'
+#' @examples
+#' set.seed(1)
+#' Z <- rnorm(100)
+#' X <- Z + rnorm(100)
+#' H <- rnorm(100)
+#' D <- Z^2 + sin(X) + H + rnorm(100)
+#' A <- X
+#' Y <- tanh(A) * D + cos(X) - H + rnorm(100)
+#' fit <- fit_IVDML(Y = Y, D = D, Z = Z, X = X, A = A, ml_method = "gam")
+#' coef(fit, iv_method = "mlIV")
+#' coef(fit, iv_method = "mlIV", a = 0, A = A, kernel_name = "boxcar", bandwidth = 0.2)
 
-
-
-coef <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL){
+#'
+#' @export
+coef.IVDML <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, ...){
   check_iv_method(model, iv_method)
   N <- length(model$results_splits[[1]]$cross_fitting_ind)
+  if(is.null(A)){
+    A <- model$A
+  }
   check_input_consistency(model, iv_method, a, A, kernel_name, bandwidth, N)
   return(median(unlist(lapply(model$results_splits, coef_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))))
 }
@@ -17,7 +45,6 @@ se <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwid
   N_eff <- ifelse(is.null(a), N, N * bandwidth)
   coefs <- unlist(lapply(model$results_splits, coef_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))
   med_coef <- median(coefs)
-  ## TODO: on which scale should the aggregation take place?
   vars <- N_eff * unlist(lapply(model$results_splits, se_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))^2
   return(sqrt(median(vars + (coefs - med_coef)^2)/N_eff))
 }
