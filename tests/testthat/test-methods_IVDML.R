@@ -139,5 +139,18 @@ test_that("robust_confint yields warning when no CI_range is specified", {
 })
 
 
+test_that("robust_confint yields no warning when CI_range is specified", {
+  set.seed(1)
+  Z <- rnorm(100)
+  X <- Z + rnorm(100)
+  H <- rnorm(100)
+  D <- Z^2 + sin(X) + H + rnorm(100)
+  A <- X
+  Y <- tanh(A) * D + cos(X) - H + rnorm(100)
+  fit <- fit_IVDML(Y = Y, D = D, Z = Z, X = X, ml_method = "gam")
+  expect_no_warning(robust_confint(fit, iv_method = "mlIV", a = 0, A = A, kernel_name = "boxcar", bandwidth = 0.2, CI_range = c(-10, 10)))
+})
+
+
 
 
