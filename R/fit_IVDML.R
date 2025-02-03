@@ -36,7 +36,7 @@
 #' A <- X
 #' Y <- tanh(A) * D + cos(X) - H + rnorm(100)
 #' fit <- fit_IVDML(Y = Y, D = D, Z = Z, X = X, A = A, ml_method = "gam")
-#' coef(fit, iv_method = "mlIV")
+#' coef(fit, iv_method = "mlIV", a = 0, A = A, kernel_name = "boxcar", bandwidth = 0.2)
 #'
 #' @references TODO: ADD LINK TO PAPER
 #'
