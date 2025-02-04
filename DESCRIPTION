@@ -1,6 +1,6 @@
 Package: IVDML
 Title: Double Machine Learning for potentially heterogeneous treatment effects with Instrumental Variables
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person("Cyrill", "Scheidegger", , "cyrill.scheidegger@stat.math.ethz.ch", role = c("aut", "cre"))
 Description: Implementation of instrumental variable (IV) estimators for homogeneous and heterogeneous treatment effects with efficient machine learning instruments. The estimators are based on double/debiased machine learning allowing for nonlinear and potentially high-dimensional control variables. Details can be found in ?Scheidegger et al. 2025 (to be published)?.

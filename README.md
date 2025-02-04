@@ -57,7 +57,7 @@ You can install the development version of IVDML from
 [GitHub](https://github.com/) with
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+devtools::install_github("cyrillsch/IVDML")
 ```
 
 ## Homogeneous Treatment Effect
