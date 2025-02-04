@@ -18,7 +18,6 @@
 #' @param iv_method Character vector. Instrumental variables estimation method. Options:
 #' "linearIV", "mlIV", "mlIV_direct" (default: c("linearIV", "mlIV")). "linearIV" corresponds to using instruments linearly and "mlIV" corresponds to using machine learning instruments. "mlIV_direct" is a variant of "mlIV" that uses the same estimate of \eqn{\mathbb E[D|X]} for both the residuals \eqn{X - \mathbb E[D|X]} and \eqn{\mathbb E[D|Z, X] - \mathbb E[D|X]}, whereas "mlIV" uses a two-stage estimate of \eqn{\mathbb E[\widehat{\mathbb E}[D|Z, X]|X]} for the residuals \eqn{\mathbb E[D|Z, X] - \mathbb E[D|X]}.
 #' @param S_split Integer. Number of sample splits for cross-fitting (default: 1).
-#' @param n_cores Integer. Number of cores to use for parallel computation (default: 1).
 #'
 #' @return An object of class `IVDML`, containing:
 #'   - `results_splits`: A list of S_split lists of cross-fitted residuals from the different sample splits.
@@ -39,12 +38,12 @@
 #' fit <- fit_IVDML(Y = Y, D = D, Z = Z, X = X, A = A, ml_method = "gam")
 #' coef(fit, iv_method = "mlIV", a = 0, A = A, kernel_name = "boxcar", bandwidth = 0.2)
 #'
-#' @references TODO: ADD LINK TO PAPER
+#' @references ?Scheidegger et al. 2025, to be published ?
 #'
-#' @seealso TODO: ADD LINK TO OTHER FUNCTIONS
+#' @seealso Inference for a fitted `IVDML` object is done with the functions [coef.IVDML()], [se()], [standard_confint()] and [robust_confint()].
 #'
 #' @export
-fit_IVDML <- function(Y, D, Z, X = NULL, A =  NULL, ml_method, ml_par = list(), A_deterministic_X = TRUE, K_dml = 5, iv_method = c("linearIV", "mlIV"), S_split = 1, n_cores = 1){
+fit_IVDML <- function(Y, D, Z, X = NULL, A =  NULL, ml_method, ml_par = list(), A_deterministic_X = TRUE, K_dml = 5, iv_method = c("linearIV", "mlIV"), S_split = 1){
   stopifnot(is.numeric(Y), is.numeric(D), length(Y) == length(D))
   N <- length(Y)
   matrix_ZXA <- function(var, var_name) {
@@ -88,11 +87,7 @@ fit_IVDML <- function(Y, D, Z, X = NULL, A =  NULL, ml_method, ml_par = list(), 
 
   tuned_ml_par <- tuning_helper(Y, D, Z, X, ml_method, ml_par, iv_method)
   one_rep <- function(i){residuals_helper(Y, D, Z, X, ml_method, tuned_ml_par, iv_method, K_dml)}
-  if(n_cores == 1){
-    results_splits <- lapply(1:S_split, one_rep)
-  } else {
-    results_splits <- parallel::mclapply(1:S_split, one_rep, mc.cores = n_cores)
-  }
+  results_splits <- lapply(1:S_split, one_rep)
   model <- list(results_splits = results_splits, A = A, ml_method = ml_method, A_deterministic_X = A_deterministic_X, iv_method = iv_method)
   class(model) <- "IVDML"
 
