@@ -4,6 +4,8 @@
 # IVDML
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/cyrillsch/IVDML/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cyrillsch/IVDML/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The IVDML package implements an instrumental variable (IV) estimator for

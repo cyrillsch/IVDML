@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # IVDML
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/cyrillsch/IVDML/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cyrillsch/IVDML/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The IVDML package implements an instrumental variable (IV) estimator for potentially heterogeneous treatment effects in the presence of endogeneity, as presented in **?Scheidegger et al. (2025)?**. The estimator is based on double/debiased machine learning (DML) (Chernozhukov et al., 2018) and uses efficient machine learning instruments (MLIV) and kernel smoothing. 
