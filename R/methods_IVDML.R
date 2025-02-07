@@ -347,6 +347,18 @@ bandwidth_normal <- function(A){
 #' @param x Fitted object of class `IVDML`.
 #' @param ... Further arguments passed to or from other methods.
 #' @method print IVDML
+#'
+#' @examples
+#' set.seed(1)
+#' Z <- rnorm(100)
+#' X <- Z + rnorm(100)
+#' H <- rnorm(100)
+#' D <- Z^2 + sin(X) + H + rnorm(100)
+#' A <- X
+#' Y <- tanh(A) * D + cos(X) - H + rnorm(100)
+#' fit <- fit_IVDML(Y = Y, D = D, Z = Z, X = X, A = A, ml_method = "gam")
+#' print(fit)
+#'
 #' @export
 print.IVDML <- function(x, ...){
   cat("Fitted IVDML object\n")
