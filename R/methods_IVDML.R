@@ -341,3 +341,17 @@ bandwidth_normal <- function(A){
 }
 
 
+#' Print IVDML
+#'
+#' Print information for an IVDML object.
+#' @param x Fitted object of class `IVDML`.
+#' @param ... Further arguments passed to or from other methods.
+#' @method print IVDML
+#' @export
+print.IVDML <- function(x, ...){
+  cat("Fitted IVDML object\n")
+  cat("Machine learning method: ", x$ml_method, "\n")
+  cat("IV methods: ", paste(x$iv_method, collapse = ", "), "\n")
+  cat("Number of cross-fitting sample splits: ", length(x$results_splits))
+}
+

@@ -25,7 +25,7 @@
 #'   - `ml_method`: The argument `ml_method` of the function.
 #'   - `A_deterministic_X`: The argument `A_deterministic_X` of the function.
 #'   - `iv_method`: The argument `iv_method` of the function.
-#'   The treatment effect estimates, standard errors and confidence intervals can be calculated from the `IVDML` object using the functions TODO:ADD REFERENCE TO OTHER FUNCTIONS.
+#'   The treatment effect estimates, standard errors and confidence intervals can be calculated from the `IVDML` object using the functions [coef.IVDML()], [se()], [standard_confint()], [robust_confint()].
 #'
 #' @examples
 #' set.seed(1)

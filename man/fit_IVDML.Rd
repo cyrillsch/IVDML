@@ -56,7 +56,7 @@ An object of class \code{IVDML}, containing:
 \item \code{ml_method}: The argument \code{ml_method} of the function.
 \item \code{A_deterministic_X}: The argument \code{A_deterministic_X} of the function.
 \item \code{iv_method}: The argument \code{iv_method} of the function.
-The treatment effect estimates, standard errors and confidence intervals can be calculated from the \code{IVDML} object using the functions TODO:ADD REFERENCE TO OTHER FUNCTIONS.
+The treatment effect estimates, standard errors and confidence intervals can be calculated from the \code{IVDML} object using the functions \code{\link[=coef.IVDML]{coef.IVDML()}}, \code{\link[=se]{se()}}, \code{\link[=standard_confint]{standard_confint()}}, \code{\link[=robust_confint]{robust_confint()}}.
 }
 }
 \description{
