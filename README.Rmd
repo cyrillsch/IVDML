@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/cyrillsch/IVDML/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cyrillsch/IVDML/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The IVDML package implements an instrumental variable (IV) estimator for potentially heterogeneous treatment effects in the presence of endogeneity, as presented in **?Scheidegger et al. (2025)?**. The estimator is based on double/debiased machine learning (DML) (Chernozhukov et al., 2018) and uses efficient machine learning instruments (MLIV) and kernel smoothing. 
+The IVDML package implements an instrumental variable (IV) estimator for potentially heterogeneous treatment effects in the presence of endogeneity as presented in Scheidegger, Guo and Bühlmann (2025). The estimator is based on double/debiased machine learning (DML) (Chernozhukov et al., 2018) and uses efficient machine learning instruments (MLIV) and kernel smoothing. 
 
 We assume that we observe $N$ i.i.d. copies of the model
 $$Y_i = \beta(A_i)D_i + g(X_i) + \epsilon_i.$$
@@ -34,7 +34,7 @@ If we allow for the treatment effect $\beta(\cdot)$ to depend on the univariate 
 $$\beta(a) = \frac{\mathbb E[(Y_i - \mathbb E[Y_i|X_i])(\mathbb E[D_i|Z_i, X_i] - \mathbb E[D_i|X_i])|A_i = a]}{\mathbb E[(D_i - \mathbb E[D_i|X_i])(\mathbb E[D_i|Z_i, X_i] - \mathbb E[D_i|X_i])|A_i = a]}.$$
 conditional on $A_i = a$. In the sample version, we then use a kernel function $K(\cdot)$ (for example the Gaussian kernel $K(t) = \exp(-t^2/2)/\sqrt{2  \pi}$ ) to estimate the conditional expectations given $A_i = a$.
 
-For a detailed discussion of the method, we refer to **?Scheidegger et al. 2025?**. We now demonstrate, how the IVDML package is used in practice.
+For a detailed discussion of the method, we refer to Scheidegger, Guo and Bühlmann (2025). We now demonstrate, how the IVDML package is used in practice.
 
 ## Installation
 
@@ -46,7 +46,7 @@ devtools::install_github("cyrillsch/IVDML")
 
 ## Homogeneous Treatment Effect
 
-This is a basic example which shows presenting the functionality of the IVDML package for the estimation and inference for homogeneous treatment effects. We first simulate a dataset with $N = 200$ observations.
+This is a basic example presenting the functionality of the IVDML package for the estimation and inference for homogeneous treatment effects. We first simulate a dataset with $N = 200$ observations.
 
 ```{r}
 set.seed(1)
@@ -71,7 +71,7 @@ Here, `ml_method = "gam"` indicates that the nuisance functions should be estima
 print(coef(fitted_ivdml, iv_method = "mlIV"))
 print(se(fitted_ivdml, iv_method = "mlIV"))
 ```
-Indicating `iv_method = "mlIV"` gives the coefficient and standard error estimate for the estimator based on the identification presented above. Alternatively, we can also use an estimator that does not estimate the nuisance function $f(Z_i, X_i) = \mathbb E[D_i|Z_i, X_i]$ and uses the instruments linearly (i.e. using $Z_i - \mathbb E[Z_i|X_i]$ instead of $\mathbb E[D_i|Z_i, X_i] - \mathbb E[D_i|X_i])]$). This estimator was considered in Chernozhukov et al. (2018) and in Emmenegger et Bühlmann (2021).
+Indicating `iv_method = "mlIV"` gives the coefficient and standard error estimate for the estimator based on the identification presented above. Alternatively, we can also use an estimator that does not estimate the nuisance function $f(Z_i, X_i) = \mathbb E[D_i|Z_i, X_i]$ and uses the instruments linearly (i.e. using $Z_i - \mathbb E[Z_i|X_i]$ instead of $\mathbb E[D_i|Z_i, X_i] - \mathbb E[D_i|X_i])]$). This estimator was considered in Chernozhukov et al. (2018) and in Emmenegger and Bühlmann (2021).
 ```{r}
 print(coef(fitted_ivdml, iv_method = "linearIV"))
 print(se(fitted_ivdml, iv_method = "linearIV"))
@@ -133,12 +133,16 @@ print(standard_confint(fitted_ivdml, iv_method = "linearIV", a = 0, A = A, kerne
 print(robust_confint(fitted_ivdml, iv_method = "linearIV", a = 0, A = A, kernel_name = "gaussian", bandwidth = h_normal/N^0.1, level = 0.95, CI_range = c(-10, 10)))
 ```
 
+## More Examples
+More examples can be found in Scheiegger, Guo and Bühlmann (2025) and the associated GithHb repository [IVDML_Application](https://github.com/cyrillsch/IVDML_Application).
+
+
 ## References
 Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. Double/debiased machine learning for treatment and structural parameters. *The Econometrics Journal*, 21(1): C1–C68, 2018.
 
 Corinne Emmenegger and Peter Bühlmann. Regularizing double machine learning
 in partially linear endogenous models. *Electronic Journal of Statistics*, 15(2):6461–6543, 2021.
 
-Cyrill Scheidegger, COAUTHORS, Inference for heterogeneous treatment effects with efficient instruments and machine learning.
+Cyrill Scheidegger, Zijian Guo and Peter Bühlmann. Inference for heterogeneous treatment effects with efficient instruments and machine learning. Preprint, arXiv:2503.03530, 2025.
 
 Bernard W. Silverman. Density estimation for statistics and data analysis. Chapman & Hall/CRC monographs on statistics and applied probability. Chapman and Hall, London, 1986.
