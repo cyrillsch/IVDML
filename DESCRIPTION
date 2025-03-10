@@ -1,6 +1,6 @@
 Package: IVDML
 Title: Double Machine Learning with Instrumental Variables and Heterogeneity
-Version: 0.0.1
+Version: 1.0.0
 Authors@R: 
     person("Cyrill", "Scheidegger",
     email = "cyrill.scheidegger@stat.math.ethz.ch",
