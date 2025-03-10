@@ -43,7 +43,7 @@ robust_p_value_aggregated(
 The aggregated robust p-value for testing the candidate treatment effect.
 }
 \description{
-This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted \code{IVDML} model (output of \code{\link[=fit_IVDML]{fit_IVDML()}}), using either the the Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the \code{S_split} cross-fitting sample splits (where \code{S_split} was an argument of the \code{\link[=fit_IVDML]{fit_IVDML()}} function).
+This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted \code{IVDML} model (output of \code{\link[=fit_IVDML]{fit_IVDML()}}), using either the the standard Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the \code{S_split} cross-fitting sample splits (where \code{S_split} was an argument of the \code{\link[=fit_IVDML]{fit_IVDML()}} function).
 }
 \examples{
 set.seed(1)

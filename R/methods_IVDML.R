@@ -131,7 +131,7 @@ standard_confint <- function(model, iv_method, a = NULL, A = NULL, kernel_name =
 
 #' Compute Aggregated Robust p-Value for Treatment Effect in an IVDML Model
 #'
-#' This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted `IVDML` model (output of [fit_IVDML()]), using either the the Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the `S_split` cross-fitting sample splits (where `S_split` was an argument of the [fit_IVDML()] function).
+#' This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted `IVDML` model (output of [fit_IVDML()]), using either the the standard Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the `S_split` cross-fitting sample splits (where `S_split` was an argument of the [fit_IVDML()] function).
 #'
 #' @param model An object of class `IVDML`, produced by the [fit_IVDML()] function.
 #' @param candidate_value Numeric. The candidate treatment effect value to test.

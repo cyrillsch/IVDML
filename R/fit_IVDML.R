@@ -1,4 +1,4 @@
-#' Fitting Double Machine Learning Models with Instrumental Variables and Potentially Heterogenous Treatment Effect
+#' Fitting Double Machine Learning Models with Instrumental Variables and Potentially Heterogeneous Treatment Effect
 #'
 #' This function is used to fit a Double Machine Learning (DML) model with Instrumental Variables (IV) with the goal to perform inference on potentially heterogeneous treatment effects. The model under study is \eqn{Y = \beta(A)D + g(X) + \epsilon}, where the error \eqn{\epsilon} is potentially correlated with the treatment \eqn{D}, but there is an IV \eqn{Z} satisfying \eqn{\mathbb E[\epsilon|Z,X] = 0}. The object of interest is the treatment effect \eqn{\beta} of the treatment \eqn{D} on the response \eqn{Y}. The treatment effect \eqn{\beta} is either constant or can depend on the univariate quantity \eqn{A}, which is typically a component of the covariates \eqn{X}.
 #'
@@ -38,7 +38,7 @@
 #' fit <- fit_IVDML(Y = Y, D = D, Z = Z, X = X, A = A, ml_method = "gam")
 #' coef(fit, iv_method = "mlIV", a = 0, A = A, kernel_name = "boxcar", bandwidth = 0.2)
 #'
-#' @references ?Scheidegger et al. 2025, to be published ?
+#' @references Cyrill Scheidegger, Zijian Guo and Peter Bühlmann. Inference for heterogeneous treatment effects with efficient instruments and machine learning. Preprint, arXiv:2503.03530, 2025.
 #'
 #' @seealso Inference for a fitted `IVDML` object is done with the functions [coef.IVDML()], [se()], [standard_confint()] and [robust_confint()].
 #'

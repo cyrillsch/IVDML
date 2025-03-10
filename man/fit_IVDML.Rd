@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_IVDML.R
 \name{fit_IVDML}
 \alias{fit_IVDML}
-\title{Fitting Double Machine Learning Models with Instrumental Variables and Potentially Heterogenous Treatment Effect}
+\title{Fitting Double Machine Learning Models with Instrumental Variables and Potentially Heterogeneous Treatment Effect}
 \usage{
 fit_IVDML(
   Y,
@@ -75,7 +75,7 @@ coef(fit, iv_method = "mlIV", a = 0, A = A, kernel_name = "boxcar", bandwidth = 
 
 }
 \references{
-?Scheidegger et al. 2025, to be published ?
+Cyrill Scheidegger, Zijian Guo and Peter Bühlmann. Inference for heterogeneous treatment effects with efficient instruments and machine learning. Preprint, arXiv:2503.03530, 2025.
 }
 \seealso{
 Inference for a fitted \code{IVDML} object is done with the functions \code{\link[=coef.IVDML]{coef.IVDML()}}, \code{\link[=se]{se()}}, \code{\link[=standard_confint]{standard_confint()}} and \code{\link[=robust_confint]{robust_confint()}}.
