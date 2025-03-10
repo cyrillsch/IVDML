@@ -37,6 +37,12 @@ conditional on $A_i = a$. In the sample version, we then use a kernel function $
 For a detailed discussion of the method, we refer to Scheidegger, Guo and Bühlmann (2025). We now demonstrate, how the IVDML package is used in practice.
 
 ## Installation
+You can install the released CRAN version of IVDML with
+
+``` r
+install.packages("IVDML")
+```
+
 
 You can install the development version of IVDML from [GitHub](https://github.com/) with
 

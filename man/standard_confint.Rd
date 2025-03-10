@@ -30,7 +30,7 @@ standard_confint(
 \item{level}{Numeric (default: 0.95). The confidence level for the interval (e.g., 0.95 for a 95\% confidence interval).}
 }
 \value{
-A list containing:
+description A list containing:
 \itemize{
 \item \code{CI}: A numeric vector of length 2 with the lower and upper confidence interval bounds.
 \item \code{level}: The confidence level used.

@@ -10,7 +10,7 @@
 #' @param bandwidth Numeric (optional). The bandwidth for the kernel smoothing (if a heterogeneous treatment effect is estimated).
 #' @param ... Further arguments passed to or from other methods.
 #'
-#' @return If `a` is not specified, the estimated homogeneous treatment effect is returned. If `a` is specified, the heterogeneous treatment effect \eqn{\beta(a)} at \eqn{A = a} is returned.
+#' @returns If `a` is not specified, the estimated homogeneous treatment effect is returned. If `a` is specified, the heterogeneous treatment effect \eqn{\beta(a)} at \eqn{A = a} is returned.
 #'
 #' @examples
 #' set.seed(1)
@@ -48,7 +48,7 @@ coef.IVDML <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL,
 #' @param kernel_name Character (optional). The name of the kernel function to use for smoothing (if a heterogeneous treatment effect is estimated). Must be one of "boxcar", "gaussian", "epanechnikov", or "tricube".
 #' @param bandwidth Numeric (optional). The bandwidth for the kernel smoothing (if a heterogeneous treatment effect is estimated).
 #'
-#' @return A numeric value representing the estimated standard error of the treatment effect estimate. If `a` is not specified, the function returns the standard error of the homogeneous treatment effect. If `a` is specified, it returns the standard error of the heterogeneous treatment effect estimate at \eqn{A = a}.
+#' @returns A numeric value representing the estimated standard error of the treatment effect estimate. If `a` is not specified, the function returns the standard error of the homogeneous treatment effect. If `a` is specified, it returns the standard error of the heterogeneous treatment effect estimate at \eqn{A = a}.
 #'
 #'
 #' @examples
@@ -91,7 +91,7 @@ se <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwid
 #' @param bandwidth Numeric (optional). The bandwidth for the kernel smoothing (if a heterogeneous treatment effect is estimated).
 #' @param level Numeric (default: 0.95). The confidence level for the interval (e.g., 0.95 for a 95% confidence interval).
 #'
-#' @return A list containing:
+#' @returns description A list containing:
 #'   - `CI`: A numeric vector of length 2 with the lower and upper confidence interval bounds.
 #'   - `level`: The confidence level used.
 #'   - `heterogeneous_parameters`: A list with values of `a`, `kernel_name`, and `bandwidth` (if applicable), or `NULL` if a homogeneous treatment effect is estimated.
@@ -145,7 +145,7 @@ standard_confint <- function(model, iv_method, a = NULL, A = NULL, kernel_name =
 #'   - `"MMB_agg"`: Uses the quantile-based aggregation method of Meinshausen, Meier, and Bühlmann (2009).
 #' @param gamma Numeric (default: 0.5). Quantile level for the `"MMB_agg"` method. Ignored if `agg_method = "DML_agg"`.
 #'
-#' @return The aggregated robust p-value for testing the candidate treatment effect.
+#' @returns The aggregated robust p-value for testing the candidate treatment effect.
 #'
 #' @references
 #' Meinshausen, N., Meier, L., & Bühlmann, P. (2009). *P-values for high-dimensional regression*. Journal of the American Statistical Association, 104(488), 1671–1681.
@@ -207,7 +207,7 @@ robust_p_value_aggregated <- function(model, candidate_value, iv_method, a = NUL
 #'   - `"MMB_agg"`: Uses the quantile-based aggregation method of Meinshausen, Meier, and Bühlmann (2009).
 #' @param gamma Numeric (default: 0.5). Quantile level for the `"MMB_agg"` method. Ignored if `agg_method = "DML_agg"`.
 #'
-#' @return A list with the following elements:
+#' @returns A list with the following elements:
 #'   - `CI`: A named numeric vector with the lower and upper bounds of the confidence interval.
 #'   - `level`: The confidence level used.
 #'   - `message`: A message describing the nature of the confidence set (e.g., whether it spans the full range, is non-connected, or is empty due to optimization failure).
@@ -324,7 +324,7 @@ robust_confint <- function(model, iv_method, level = 0.95, a = NULL, A = NULL, k
 #'
 #' @param A Numeric vector. The data for which the bandwidth is to be computed.
 #'
-#' @return A numeric value representing the computed bandwidth.
+#' @returns A numeric value representing the computed bandwidth.
 #'
 #' @references
 #' Silverman, B. W. (1986). *Density Estimation for Statistics and Data Analysis*.  Chapman & Hall/CRC monographs on statistics and applied probability.  Chapman & Hall.
@@ -346,6 +346,7 @@ bandwidth_normal <- function(A){
 #' Print information for an IVDML object.
 #' @param x Fitted object of class `IVDML`.
 #' @param ... Further arguments passed to or from other methods.
+#' @returns No return value, called for side effects
 #' @method print IVDML
 #'
 #' @examples

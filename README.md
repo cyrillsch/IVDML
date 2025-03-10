@@ -55,6 +55,12 @@ in practice.
 
 ## Installation
 
+You can install the released CRAN version of IVDML with
+
+``` r
+install.packages("IVDML")
+```
+
 You can install the development version of IVDML from
 [GitHub](https://github.com/) with
 

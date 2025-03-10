@@ -19,7 +19,7 @@
 #' "linearIV", "mlIV", "mlIV_direct" (default: c("linearIV", "mlIV")). "linearIV" corresponds to using instruments linearly and "mlIV" corresponds to using machine learning instruments. "mlIV_direct" is a variant of "mlIV" that uses the same estimate of \eqn{\mathbb E[D|X]} for both the residuals \eqn{X - \mathbb E[D|X]} and \eqn{\mathbb E[D|Z, X] - \mathbb E[D|X]}, whereas "mlIV" uses a two-stage estimate of \eqn{\mathbb E[\widehat{\mathbb E}[D|Z, X]|X]} for the residuals \eqn{\mathbb E[D|Z, X] - \mathbb E[D|X]}.
 #' @param S_split Integer. Number of sample splits for cross-fitting (default: 1).
 #'
-#' @return An object of class `IVDML`, containing:
+#' @returns An object of class `IVDML`, containing:
 #'   - `results_splits`: A list of S_split lists of cross-fitted residuals from the different sample splits.
 #'   - `A`: The argument `A` of the function.
 #'   - `ml_method`: The argument `ml_method` of the function.
