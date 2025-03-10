@@ -2,10 +2,10 @@
 % Please edit documentation in R/methods_IVDML.R
 \name{robust_confint}
 \alias{robust_confint}
-\title{Compute Robust Confidence Interval for Treatment Effect in an IVDML Model}
+\title{Compute Robust Confidence Interval for Treatment Effect in an IVDML Object}
 \usage{
 robust_confint(
-  model,
+  object,
   iv_method,
   level = 0.95,
   a = NULL,
@@ -18,9 +18,9 @@ robust_confint(
 )
 }
 \arguments{
-\item{model}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
+\item{object}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
 
-\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.}
+\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.}
 
 \item{level}{Numeric (default: 0.95). The confidence level for the confidence interval.}
 
@@ -52,7 +52,7 @@ A list with the following elements:
 }
 }
 \description{
-This function computes a robust (with respect to weak IV) confidence interval/confidence set for the estimated treatment effect in a fitted \code{IVDML} model (output of \code{\link[=fit_IVDML]{fit_IVDML()}}). The confidence interval/confidence set is constructed by inverting the robust test from the \code{\link[=robust_p_value_aggregated]{robust_p_value_aggregated()}} function, which either uses the Double Machine Learning aggregation method (\code{"DML_agg"}) or the quantile-based method of Meinshausen, Meier, and Bühlmann (2009) (\code{"MMB_agg"}) to aggregate the p-values corresponding to the \code{S_split} cross-fitting sample splits (where \code{S_split} was an argument of the \code{\link[=fit_IVDML]{fit_IVDML()}} function).
+This function computes a robust (with respect to weak IV) confidence interval/confidence set for the estimated treatment effect in a fitted \code{IVDML} object (output of \code{\link[=fit_IVDML]{fit_IVDML()}}). The confidence interval/confidence set is constructed by inverting the robust test from the \code{\link[=robust_p_value_aggregated]{robust_p_value_aggregated()}} function, which either uses the Double Machine Learning aggregation method (\code{"DML_agg"}) or the quantile-based method of Meinshausen, Meier, and Bühlmann (2009) (\code{"MMB_agg"}) to aggregate the p-values corresponding to the \code{S_split} cross-fitting sample splits (where \code{S_split} was an argument of the \code{\link[=fit_IVDML]{fit_IVDML()}} function).
 }
 \examples{
 set.seed(1)

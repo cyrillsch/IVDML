@@ -2,14 +2,14 @@
 % Please edit documentation in R/methods_IVDML.R
 \name{se}
 \alias{se}
-\title{Compute Standard Error for the Treatment Effect Estimate in an IVDML Model}
+\title{Compute Standard Error for the Treatment Effect Estimate in an IVDML Object}
 \usage{
-se(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL)
+se(object, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL)
 }
 \arguments{
-\item{model}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
+\item{object}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
 
-\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.}
+\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.}
 
 \item{a}{Numeric (optional). A specific value of \code{A} at which to evaluate the standard error of the heterogeneous treatment effect. If \code{NULL}, the function returns the standard error of the homogeneous treatment effect.}
 
@@ -23,7 +23,7 @@ se(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL)
 A numeric value representing the estimated standard error of the treatment effect estimate. If \code{a} is not specified, the function returns the standard error of the homogeneous treatment effect. If \code{a} is specified, it returns the standard error of the heterogeneous treatment effect estimate at \eqn{A = a}.
 }
 \description{
-This function calculates the standard error of the estimated (potentially heterogeneous) treatment effect from a fitted \code{IVDML} model (output of \code{\link[=fit_IVDML]{fit_IVDML()}}).
+This function calculates the standard error of the estimated (potentially heterogeneous) treatment effect from a fitted \code{IVDML} object (output of \code{\link[=fit_IVDML]{fit_IVDML()}}).
 }
 \examples{
 set.seed(1)

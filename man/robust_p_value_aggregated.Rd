@@ -2,10 +2,10 @@
 % Please edit documentation in R/methods_IVDML.R
 \name{robust_p_value_aggregated}
 \alias{robust_p_value_aggregated}
-\title{Compute Aggregated Robust p-Value for Treatment Effect in an IVDML Model}
+\title{Compute Aggregated Robust p-Value for Treatment Effect in an IVDML Object}
 \usage{
 robust_p_value_aggregated(
-  model,
+  object,
   candidate_value,
   iv_method,
   a = NULL,
@@ -17,11 +17,11 @@ robust_p_value_aggregated(
 )
 }
 \arguments{
-\item{model}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
+\item{object}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
 
 \item{candidate_value}{Numeric. The candidate treatment effect value to test.}
 
-\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.}
+\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.}
 
 \item{a}{Numeric (optional). A specific value of \code{A} at which to compute the p-value for the heterogeneous treatment effect. If \code{NULL}, the function returns the p-value for the homogeneous treatment effect.}
 
@@ -43,7 +43,7 @@ robust_p_value_aggregated(
 The aggregated robust p-value for testing the candidate treatment effect.
 }
 \description{
-This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted \code{IVDML} model (output of \code{\link[=fit_IVDML]{fit_IVDML()}}), using either the the standard Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the \code{S_split} cross-fitting sample splits (where \code{S_split} was an argument of the \code{\link[=fit_IVDML]{fit_IVDML()}} function).
+This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted \code{IVDML} object (output of \code{\link[=fit_IVDML]{fit_IVDML()}}), using either the the standard Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the \code{S_split} cross-fitting sample splits (where \code{S_split} was an argument of the \code{\link[=fit_IVDML]{fit_IVDML()}} function).
 }
 \examples{
 set.seed(1)

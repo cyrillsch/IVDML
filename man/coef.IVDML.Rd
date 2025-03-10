@@ -2,10 +2,10 @@
 % Please edit documentation in R/methods_IVDML.R
 \name{coef.IVDML}
 \alias{coef.IVDML}
-\title{Extract Treatment Effect Estimate from an IVDML Model}
+\title{Extract Treatment Effect Estimate from an IVDML Object}
 \usage{
 \method{coef}{IVDML}(
-  model,
+  object,
   iv_method,
   a = NULL,
   A = NULL,
@@ -15,9 +15,9 @@
 )
 }
 \arguments{
-\item{model}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
+\item{object}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
 
-\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.}
+\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.}
 
 \item{a}{Numeric (optional). A specific value of \code{A} at which to evaluate the heterogeneous treatment effect. If \code{NULL}, the function returns the homogeneous treatment effect.}
 
@@ -33,7 +33,7 @@
 If \code{a} is not specified, the estimated homogeneous treatment effect is returned. If \code{a} is specified, the heterogeneous treatment effect \eqn{\beta(a)} at \eqn{A = a} is returned.
 }
 \description{
-This function computes the estimated (potentially heterogeneous) treatment effect from a fitted \code{IVDML} model (output of \code{\link[=fit_IVDML]{fit_IVDML()}}).
+This function computes the estimated (potentially heterogeneous) treatment effect from a fitted \code{IVDML} object (output of \code{\link[=fit_IVDML]{fit_IVDML()}}).
 }
 \examples{
 set.seed(1)

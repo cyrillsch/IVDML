@@ -6,7 +6,7 @@
 \alias{IVDML-package}
 \title{IVDML: Double Machine Learning with Instrumental Variables and Heterogeneity}
 \description{
-Instrumental variable (IV) estimators for homogeneous and heterogeneous treatment effects with efficient machine learning instruments. The estimators are based on double/debiased machine learning allowing for nonlinear and potentially high-dimensional control variables. Details can be found in Scheidegger, Guo and Bühlmann (2025) "Inference for heterogeneous treatment effects with efficient instruments and machine learning" \href{https://arxiv.org/abs/2503.03530}{arXiv:2503.03530}.
+Instrumental variable (IV) estimators for homogeneous and heterogeneous treatment effects with efficient machine learning instruments. The estimators are based on double/debiased machine learning allowing for nonlinear and potentially high-dimensional control variables. Details can be found in Scheidegger, Guo and Bühlmann (2025) "Inference for heterogeneous treatment effects with efficient instruments and machine learning" \doi{10.48550/arXiv:2503.03530}.
 }
 \seealso{
 Useful links:

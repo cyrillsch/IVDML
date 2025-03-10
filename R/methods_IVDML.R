@@ -1,9 +1,9 @@
-#' Extract Treatment Effect Estimate from an IVDML Model
+#' Extract Treatment Effect Estimate from an IVDML Object
 #'
-#' This function computes the estimated (potentially heterogeneous) treatment effect from a fitted `IVDML` model (output of [fit_IVDML()]).
+#' This function computes the estimated (potentially heterogeneous) treatment effect from a fitted `IVDML` object (output of [fit_IVDML()]).
 #'
-#' @param model An object of class `IVDML`, produced by the [fit_IVDML()] function.
-#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.
+#' @param object An object of class `IVDML`, produced by the [fit_IVDML()] function.
+#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.
 #' @param a Numeric (optional). A specific value of `A` at which to evaluate the heterogeneous treatment effect. If `NULL`, the function returns the homogeneous treatment effect.
 #' @param A Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If `NULL`, the function assumes the `A` used in model fitting.
 #' @param kernel_name Character (optional). The name of the kernel function to use for smoothing (if a heterogeneous treatment effect is estimated). Needs to be one of "boxcar", "gaussian", "epanechnikov" or "tricube".
@@ -26,23 +26,23 @@
 
 #'
 #' @export
-coef.IVDML <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, ...){
-  check_iv_method(model, iv_method)
-  N <- length(model$results_splits[[1]]$cross_fitting_ind)
+coef.IVDML <- function(object, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, ...){
+  check_iv_method(object, iv_method)
+  N <- length(object$results_splits[[1]]$cross_fitting_ind)
   if(is.null(A)){
-    A <- model$A
+    A <- object$A
   }
-  check_input_consistency(model, iv_method, a, A, kernel_name, bandwidth, N)
-  return(median(unlist(lapply(model$results_splits, coef_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))))
+  check_input_consistency(object, iv_method, a, A, kernel_name, bandwidth, N)
+  return(median(unlist(lapply(object$results_splits, coef_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))))
 }
 
 
-#' Compute Standard Error for the Treatment Effect Estimate in an IVDML Model
+#' Compute Standard Error for the Treatment Effect Estimate in an IVDML Object
 #'
-#' This function calculates the standard error of the estimated (potentially heterogeneous) treatment effect from a fitted `IVDML` model (output of [fit_IVDML()]).
+#' This function calculates the standard error of the estimated (potentially heterogeneous) treatment effect from a fitted `IVDML` object (output of [fit_IVDML()]).
 #'
-#' @param model An object of class `IVDML`, produced by the [fit_IVDML()] function.
-#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.
+#' @param object An object of class `IVDML`, produced by the [fit_IVDML()] function.
+#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.
 #' @param a Numeric (optional). A specific value of `A` at which to evaluate the standard error of the heterogeneous treatment effect. If `NULL`, the function returns the standard error of the homogeneous treatment effect.
 #' @param A Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If `NULL`, the function assumes the `A` used in model fitting.
 #' @param kernel_name Character (optional). The name of the kernel function to use for smoothing (if a heterogeneous treatment effect is estimated). Must be one of "boxcar", "gaussian", "epanechnikov", or "tricube".
@@ -64,29 +64,29 @@ coef.IVDML <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL,
 #' se(fit, iv_method = "mlIV", a = 0, A = A, kernel_name = "boxcar", bandwidth = 0.2)
 #'
 #' @export
-se <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL){
-  check_iv_method(model, iv_method)
-  N <- length(model$results_splits[[1]]$cross_fitting_ind)
+se <- function(object, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL){
+  check_iv_method(object, iv_method)
+  N <- length(object$results_splits[[1]]$cross_fitting_ind)
   if(is.null(A)){
-    A <- model$A
+    A <- object$A
   }
-  check_input_consistency(model, iv_method, a, A, kernel_name, bandwidth, N)
+  check_input_consistency(object, iv_method, a, A, kernel_name, bandwidth, N)
   N_eff <- ifelse(is.null(a), N, N * bandwidth)
-  coefs <- unlist(lapply(model$results_splits, coef_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))
+  coefs <- unlist(lapply(object$results_splits, coef_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))
   med_coef <- median(coefs)
-  vars <- N_eff * unlist(lapply(model$results_splits, se_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))^2
+  vars <- N_eff * unlist(lapply(object$results_splits, se_single_split, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth))^2
   return(sqrt(median(vars + (coefs - med_coef)^2)/N_eff))
 }
 
 
-#' Compute Standard Confidence Interval for the Treatment Effect Estimate in an IVDML Model
+#' Compute Standard Confidence Interval for the Treatment Effect Estimate in an IVDML Object
 #'
-#' This function calculates a standard confidence interval for the estimated (potentially heterogeneous) treatment effect from a fitted `IVDML` model (output of [fit_IVDML()]). The confidence interval is computed using the normal approximation method using the standard error computed by [se()] and the treatment effect estimate from [coef()].
+#' This function calculates a standard confidence interval for the estimated (potentially heterogeneous) treatment effect from a fitted `IVDML` object (output of [fit_IVDML()]). The confidence interval is computed using the normal approximation method using the standard error computed by [se()] and the treatment effect estimate from [coef()].
 #'
-#' @param model An object of class `IVDML`, produced by the [fit_IVDML()] function.
-#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.
+#' @param object An object of class `IVDML`, produced by the [fit_IVDML()] function.
+#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.
 #' @param a Numeric (optional). A specific value of `A` at which to compute the confidence interval for the heterogeneous treatment effect. If `NULL`, the function returns the confidence interval for the homogeneous treatment effect.
-#' @param A Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If `NULL`, the function assumes the `A` used in model fitting.
+#' @param A Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If `NULL`, the function assumes the `A` used in object fitting.
 #' @param kernel_name Character (optional). The name of the kernel function to use for smoothing (if a heterogeneous treatment effect is estimated). Must be one of "boxcar", "gaussian", "epanechnikov", or "tricube".
 #' @param bandwidth Numeric (optional). The bandwidth for the kernel smoothing (if a heterogeneous treatment effect is estimated).
 #' @param level Numeric (default: 0.95). The confidence level for the interval (e.g., 0.95 for a 95% confidence interval).
@@ -110,13 +110,13 @@ se <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwid
 #'                  kernel_name = "boxcar", bandwidth = 0.2, level = 0.95)
 #'
 #' @export
-standard_confint <- function(model, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, level = 0.95){
+standard_confint <- function(object, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, level = 0.95){
   if(is.null(A)){
-    A <- model$A
+    A <- object$A
   }
   # the se and coef functions function already check the input, so we do not have to do it again
-  coef_hat <- coef.IVDML(model, iv_method, a, A, kernel_name, bandwidth)
-  se_hat <- se(model, iv_method, a, A, kernel_name, bandwidth)
+  coef_hat <- coef.IVDML(object, iv_method, a, A, kernel_name, bandwidth)
+  se_hat <- se(object, iv_method, a, A, kernel_name, bandwidth)
   z <- -qnorm((1-level)/2)
   lower <- coef_hat - z * se_hat
   upper <- coef_hat + z * se_hat
@@ -129,13 +129,13 @@ standard_confint <- function(model, iv_method, a = NULL, A = NULL, kernel_name =
 }
 
 
-#' Compute Aggregated Robust p-Value for Treatment Effect in an IVDML Model
+#' Compute Aggregated Robust p-Value for Treatment Effect in an IVDML Object
 #'
-#' This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted `IVDML` model (output of [fit_IVDML()]), using either the the standard Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the `S_split` cross-fitting sample splits (where `S_split` was an argument of the [fit_IVDML()] function).
+#' This function calculates an aggregated robust (with respect to weak IV) p-value for testing a candidate treatment effect value in a fitted `IVDML` object (output of [fit_IVDML()]), using either the the standard Double Machine Learning aggregation method ("DML_agg") or the method by Meinshausen, Meier, and Bühlmann (2009) ("MMB_agg") to aggregate the p-values corresponding to the `S_split` cross-fitting sample splits (where `S_split` was an argument of the [fit_IVDML()] function).
 #'
-#' @param model An object of class `IVDML`, produced by the [fit_IVDML()] function.
+#' @param object An object of class `IVDML`, produced by the [fit_IVDML()] function.
 #' @param candidate_value Numeric. The candidate treatment effect value to test.
-#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.
+#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.
 #' @param a Numeric (optional). A specific value of `A` at which to compute the p-value for the heterogeneous treatment effect. If `NULL`, the function returns the p-value for the homogeneous treatment effect.
 #' @param A Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If `NULL`, the function assumes the `A` used in model fitting.
 #' @param kernel_name Character (optional). The name of the kernel function to use for smoothing (if a heterogeneous treatment effect is estimated). Must be one of "boxcar", "gaussian", "epanechnikov", or "tricube".
@@ -164,13 +164,13 @@ standard_confint <- function(model, iv_method, a = NULL, A = NULL, kernel_name =
 #'                           a = 0, A = A, kernel_name = "boxcar", bandwidth = 0.2)
 #'
 #' @export
-robust_p_value_aggregated <- function(model, candidate_value, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, agg_method = "DML_agg", gamma = 0.5){
-  check_iv_method(model, iv_method)
-  N <- length(model$results_splits[[1]]$cross_fitting_ind)
-  check_input_consistency(model, iv_method, a, A, kernel_name, bandwidth, N)
+robust_p_value_aggregated <- function(object, candidate_value, iv_method, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, agg_method = "DML_agg", gamma = 0.5){
+  check_iv_method(object, iv_method)
+  N <- length(object$results_splits[[1]]$cross_fitting_ind)
+  check_input_consistency(object, iv_method, a, A, kernel_name, bandwidth, N)
   N_eff <- ifelse(is.null(a), N, N * bandwidth)
   if(agg_method == "MMB_agg"){
-    p_values <- unlist(lapply(model$results_splits, robust_p_value_single_split, candidate_value = candidate_value, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth, N_eff = N_eff))
+    p_values <- unlist(lapply(object$results_splits, robust_p_value_single_split, candidate_value = candidate_value, iv_method = iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth, N_eff = N_eff))
     if(length(p_values) == 1){
       return(unname(p_values))
     }
@@ -179,7 +179,7 @@ robust_p_value_aggregated <- function(model, candidate_value, iv_method, a = NUL
     }
   }
   else if(agg_method == "DML_agg"){
-    test_stat <- robust_test_statistic_aggregated(model, candidate_value, iv_method, a, A, kernel_name, bandwidth)
+    test_stat <- robust_test_statistic_aggregated(object, candidate_value, iv_method, a, A, kernel_name, bandwidth)
     return(unname(2 * (1-pnorm(abs(test_stat[1])/test_stat[2]))))
   }
   else{
@@ -190,12 +190,12 @@ robust_p_value_aggregated <- function(model, candidate_value, iv_method, a = NUL
 
 
 
-#' Compute Robust Confidence Interval for Treatment Effect in an IVDML Model
+#' Compute Robust Confidence Interval for Treatment Effect in an IVDML Object
 #'
-#' This function computes a robust (with respect to weak IV) confidence interval/confidence set for the estimated treatment effect in a fitted `IVDML` model (output of [fit_IVDML()]). The confidence interval/confidence set is constructed by inverting the robust test from the [robust_p_value_aggregated()] function, which either uses the Double Machine Learning aggregation method (`"DML_agg"`) or the quantile-based method of Meinshausen, Meier, and Bühlmann (2009) (`"MMB_agg"`) to aggregate the p-values corresponding to the `S_split` cross-fitting sample splits (where `S_split` was an argument of the [fit_IVDML()] function).
+#' This function computes a robust (with respect to weak IV) confidence interval/confidence set for the estimated treatment effect in a fitted `IVDML` object (output of [fit_IVDML()]). The confidence interval/confidence set is constructed by inverting the robust test from the [robust_p_value_aggregated()] function, which either uses the Double Machine Learning aggregation method (`"DML_agg"`) or the quantile-based method of Meinshausen, Meier, and Bühlmann (2009) (`"MMB_agg"`) to aggregate the p-values corresponding to the `S_split` cross-fitting sample splits (where `S_split` was an argument of the [fit_IVDML()] function).
 #'
-#' @param model An object of class `IVDML`, produced by the [fit_IVDML()] function.
-#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.
+#' @param object An object of class `IVDML`, produced by the [fit_IVDML()] function.
+#' @param iv_method Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.
 #' @param level Numeric (default: 0.95). The confidence level for the confidence interval.
 #' @param a Numeric (optional). A specific value of `A` at which to compute the confidence interval for the heterogeneous treatment effect. If `NULL`, the function returns the confidence interval for the homogeneous treatment effect.
 #' @param A Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If `NULL`, the function assumes the `A` used in model fitting.
@@ -230,12 +230,12 @@ robust_p_value_aggregated <- function(model, candidate_value, iv_method, a = NUL
 #'                kernel_name = "boxcar", bandwidth = 0.2, CI_range = c(-10, 10))
 #'
 #' @export
-robust_confint <- function(model, iv_method, level = 0.95, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, CI_range = NULL, agg_method = "DML_agg", gamma = 0.5){
+robust_confint <- function(object, iv_method, level = 0.95, a = NULL, A = NULL, kernel_name = NULL, bandwidth = NULL, CI_range = NULL, agg_method = "DML_agg", gamma = 0.5){
   # input is checked in coef_estimate
-  coef_estimate <- coef.IVDML(model, iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth)
+  coef_estimate <- coef.IVDML(object, iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth)
   if(is.null(CI_range)){
     warning("No CI_range was specified. It is set to a range that is 4 times as large as the standard CI and centered at the point estimate.")
-    se <- se(model, iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth)
+    se <- se(object, iv_method, a = a, A = A, kernel_name = kernel_name, bandwidth = bandwidth)
     z <- -qnorm((1-level)/2)
     CI_range = c(coef_estimate - 4 * z *se, coef_estimate + 4 * z * se)
   }
@@ -245,12 +245,12 @@ robust_confint <- function(model, iv_method, level = 0.95, a = NULL, A = NULL, k
   alpha <- 1 - level
   if(agg_method == "MMB_agg"){
     agg_test <- function(candidate_value){
-      return(alpha - robust_p_value_aggregated(model, candidate_value, iv_method, a, A, kernel_name, bandwidth, agg_method = "MMB_agg", gamma))
+      return(alpha - robust_p_value_aggregated(object, candidate_value, iv_method, a, A, kernel_name, bandwidth, agg_method = "MMB_agg", gamma))
     }
   }
   else if (agg_method == "DML_agg"){
     agg_test <- function(candidate_value){
-      Tstat <- robust_test_statistic_aggregated(model, candidate_value, iv_method, a, A, kernel_name, bandwidth)
+      Tstat <- robust_test_statistic_aggregated(object, candidate_value, iv_method, a, A, kernel_name, bandwidth)
       z <- -qnorm((1-level)/2)
       return(abs(Tstat[1]) - z * Tstat[2])
     }

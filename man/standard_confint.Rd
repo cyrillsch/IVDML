@@ -2,10 +2,10 @@
 % Please edit documentation in R/methods_IVDML.R
 \name{standard_confint}
 \alias{standard_confint}
-\title{Compute Standard Confidence Interval for the Treatment Effect Estimate in an IVDML Model}
+\title{Compute Standard Confidence Interval for the Treatment Effect Estimate in an IVDML Object}
 \usage{
 standard_confint(
-  model,
+  object,
   iv_method,
   a = NULL,
   A = NULL,
@@ -15,13 +15,13 @@ standard_confint(
 )
 }
 \arguments{
-\item{model}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
+\item{object}{An object of class \code{IVDML}, produced by the \code{\link[=fit_IVDML]{fit_IVDML()}} function.}
 
-\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted model.}
+\item{iv_method}{Character. The instrumental variable estimation method to use. Must be one of the methods specified in the fitted object.}
 
 \item{a}{Numeric (optional). A specific value of \code{A} at which to compute the confidence interval for the heterogeneous treatment effect. If \code{NULL}, the function returns the confidence interval for the homogeneous treatment effect.}
 
-\item{A}{Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If \code{NULL}, the function assumes the \code{A} used in model fitting.}
+\item{A}{Numeric vector (optional). The variable with respect to which treatment effect heterogeneity is considered. If \code{NULL}, the function assumes the \code{A} used in object fitting.}
 
 \item{kernel_name}{Character (optional). The name of the kernel function to use for smoothing (if a heterogeneous treatment effect is estimated). Must be one of "boxcar", "gaussian", "epanechnikov", or "tricube".}
 
@@ -38,7 +38,7 @@ description A list containing:
 }
 }
 \description{
-This function calculates a standard confidence interval for the estimated (potentially heterogeneous) treatment effect from a fitted \code{IVDML} model (output of \code{\link[=fit_IVDML]{fit_IVDML()}}). The confidence interval is computed using the normal approximation method using the standard error computed by \code{\link[=se]{se()}} and the treatment effect estimate from \code{\link[=coef]{coef()}}.
+This function calculates a standard confidence interval for the estimated (potentially heterogeneous) treatment effect from a fitted \code{IVDML} object (output of \code{\link[=fit_IVDML]{fit_IVDML()}}). The confidence interval is computed using the normal approximation method using the standard error computed by \code{\link[=se]{se()}} and the treatment effect estimate from \code{\link[=coef]{coef()}}.
 }
 \examples{
 set.seed(1)
